@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/filter.css">
 <link rel="stylesheet" href="css/nouislider.min.css">
+
         <style>
         html, body, #map {
             width: 100%;
@@ -105,6 +106,11 @@
         });
         layer_OSMStandard_1;
         map.addLayer(layer_OSMStandard_1);
+        
+        
+        
+        
+        
         function pop_temp1_2_1_2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
@@ -138,59 +144,115 @@
 			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
+        
+//~ simbologia para los puntos circulos de colores
+        //~ function style_temp1_2_1_2_0(feature) {
+            //~ switch(String(feature.properties['categoria'])) {
+                //~ case '25000-38000':
+                    //~ return {
+                //~ pane: 'pane_temp1_2_1_2',
+                //~ radius: 6.4,
+                //~ opacity: 1,
+                //~ color: 'rgba(255, 255, 0, 1)',
+                //~ dashArray: '',
+                //~ lineCap: 'butt',
+                //~ lineJoin: 'miter',
+                //~ weight: 1,
+                //~ fill: true,
+                //~ fillOpacity: 1,
+                //~ fillColor: 'rgba(255, 255, 0, 0.5)',
+                //~ interactive: true,
+            //~ }
+                    //~ break;
+                //~ case '38000-45000':
+                    //~ return {
+                //~ pane: 'pane_temp1_2_1_2',
+                //~ radius: 6.4,
+                //~ opacity: 1,
+                //~ color: 'rgba(0, 255, 0, 1)',
+                //~ dashArray: '',
+                //~ lineCap: 'butt',
+                //~ lineJoin: 'miter',
+                //~ weight: 1,
+                //~ fill: true,
+                //~ fillOpacity: 1,
+                //~ fillColor: 'rgba(0, 255, 0, 0.5)',
+                //~ interactive: true,
+            //~ }
+                    //~ break;
+                //~ case '45000-60000':
+                    //~ return {
+                //~ pane: 'pane_temp1_2_1_2',
+                //~ radius: 6.4,
+                //~ opacity: 1,
+                //~ color: 'rgba(255, 0, 0, 1)',
+                //~ dashArray: '',
+                //~ lineCap: 'butt',
+                //~ lineJoin: 'miter',
+                //~ weight: 1,
+                //~ fill: true,
+                //~ fillOpacity: 1,
+                //~ fillColor: 'rgba(255, 0, 0, 0.5)',
+                //~ interactive: true,
+            //~ }
+                    //~ break;
+            //~ }
+        //~ }
+        
+        
+        //~ simbología para los puntos imagenes .png
+		function style_temp1_2_1_2_0(feature) {
+			let iconUrl;			
+			// Determinamos qué imagen usar dependiendo de la categoría
+			switch(String(feature.properties['categoria'])) {
+				case '25000-38000':
+					iconUrl = 'legend/temp1_2_1_2_25000380000.png';  // Reemplaza con la ruta de tu imagen para esta categoría
+					break;
+				case '38000-45000':
+					iconUrl = 'legend/temp1_2_1_2_38000450001.png';  // Reemplaza con la ruta de tu imagen para esta categoría
+					break;
+				case '45000-60000':
+					iconUrl = 'legend/temp1_2_1_2_45000600002.png';  // Reemplaza con la ruta de tu imagen para esta categoría
+					break;
+				default:
+					iconUrl = 'css/images/marker-icon.png';  // Ruta de imagen por defecto
+					break;
+			}
 
-        function style_temp1_2_1_2_0(feature) {
-            switch(String(feature.properties['categoria'])) {
-                case '25000-38000':
-                    return {
-                pane: 'pane_temp1_2_1_2',
-                radius: 6.4,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(255,255,255,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '38000-45000':
-                    return {
-                pane: 'pane_temp1_2_1_2',
-                radius: 6.4,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(255,170,170,1.0)',
-                interactive: true,
-            }
-                    break;
-                case '45000-60000':
-                    return {
-                pane: 'pane_temp1_2_1_2',
-                radius: 6.4,
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1,
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(255,85,85,1.0)',
-                interactive: true,
-            }
-                    break;
-            }
-        }
+			// Devuelve el estilo con el ícono asignado
+			return {
+				pane: 'pane_temp1_2_1_2',
+				icon: L.icon({
+					iconUrl: iconUrl,
+					iconSize: [22, 22],  // Tamaño de la imagen (ajústalo según el tamaño de la imagen)
+					iconAnchor: [16, 32], // Ancla del ícono (ajustar dependiendo de la imagen)
+					popupAnchor: [0, -32] // Ajustar la posición del popup
+				}),
+				interactive: true,
+			};
+			// Definir el estilo CSS para las etiquetas
+			const labelStyle = `
+				.label {
+					font-family: 'Roboto', sans-serif; /* Cambia a la fuente deseada */
+					font-size: 8px;
+					font-weight: bold;
+					color: black; /* Cambia el color según sea necesario */
+					text-align: center;
+					background: white; /* Fondo blanco para mejor visibilidad */
+					border-radius: 3px;
+					padding: 2px;
+				}
+			`;
+
+			// Añadir el estilo al documento
+			const styleSheet = document.createElement("style");
+			styleSheet.type = "text/css";
+			styleSheet.innerText = labelStyle;
+			document.head.appendChild(styleSheet);			
+		}
+
+        
+        
         map.createPane('pane_temp1_2_1_2');
         map.getPane('pane_temp1_2_1_2').style.zIndex = 402;
         map.getPane('pane_temp1_2_1_2').style['mix-blend-mode'] = 'normal';
@@ -206,8 +268,20 @@
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_temp1_2_1_2_0(feature));
-            },
+                return L.marker(latlng, style_temp1_2_1_2_0(feature));
+
+				// Crear un div para la etiqueta
+				var label = L.divIcon({
+					className: 'label', // Clase CSS definida anteriormente
+					html: feature.properties['id'], // Usar el atributo 'id'
+					iconSize: [30, 10], // Tamaño del icono (ajustar según sea necesario)
+					iconAnchor: [15, 0] // Ancla del icono (ajustar según sea necesario)
+				});        
+				// Añadir la etiqueta al marcador
+				marker.bindTooltip(label.getContent(), { permanent: true, direction: 'top' });
+				
+				return marker;				        
+					},
         });
         bounds_group.addLayer(layer_temp1_2_1_2);
         map.addLayer(layer_temp1_2_1_2);
@@ -443,7 +517,7 @@
             sel_dormis.innerHTML = dormis_options_str;
             div_dormis.appendChild(sel_dormis);
             var reset_dormis = document.createElement('div');
-            reset_dormis.innerHTML = 'clear filter';
+            reset_dormis.innerHTML = 'limpiar filtro';
             reset_dormis.className = 'filterlabel';
             reset_dormis.onclick = function() {
                 var options = document.getElementById("sel_dormis").options;
